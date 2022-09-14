@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import Card from "./components/Card";
+import { useState } from "react";
+import { useEffect } from "react";
+import IPhoneCard from "./components/IPhoneCard";
+import AltHeader from "./components/AltHeader";
 
-function App() {
+export default function App() {
+
+ const [products, handleProduct] = useState([]);
+ 
+  useEffect(() => {
+    fetch('http://localhost:3000/products')
+      .then((serverResponse) => {
+        return serverResponse.json();
+      })
+      .then((serverResponseJSON) => {
+        handleProduct(serverResponseJSON);
+      })
+
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AltHeader/>
+      <Header/>
+      <IPhoneCard></IPhoneCard>
+      <br/>
+      <div className="d-flex justify-content-center">
+      <div className="d-flex flex-column">
+        {products.map( (product, key) => 
+          <div className="p-2" key={key}>
+            <Card key={product.id} title={product.title} description={product.description} 
+             subdescription={product.subdescription} image={product.image} alt={product.alt}>
+            </Card>
+          </div>
+          )}
+      </div>
+      </div>
+    </>
   );
 }
-
-export default App;

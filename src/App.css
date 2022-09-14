@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.carousel slide{
+  height: 100px;
+}
+
+.item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 500px;
+}
+
